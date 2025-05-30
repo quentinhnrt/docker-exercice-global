@@ -105,13 +105,14 @@ services:
       - prestashop_network
 
   backup:
-    image: mysql:5.7
+    build: ./backup
     volumes:
-      - ./backup.sh:/backup.sh
       - backup_data:/backups
-    command: bash -c "chmod +x /backup.sh && /backup.sh"
     environment:
       MYSQL_ROOT_PASSWORD: root
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_HOST: db
     networks:
       - prestashop_network
     depends_on:
